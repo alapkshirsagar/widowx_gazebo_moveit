@@ -1,89 +1,31 @@
-# widowx_arm
+# widowx_arm_dev
 
-This ROS package is intended to work with the [WidowX](https://www.roscomponents.com/en/robotic-arms/11-widowx.html#/assembled-no) arm.
+ROS support for WidowX including MoveIt!, IKFast and Pick & Place / Sorting demo.
 
-* widowx_arm_controller : Controller based on arbotix_python driver to control de arm
-* widowx_arm_description : Description of the arm
+Optionally using SR300 for pointcloud.
 
-## Installation and configuration
+Depending on interbotix/arbotix_ros/turtlebot2i [branch](https://github.com/Interbotix/arbotix_ros/tree/turtlebot2i) for gripper controller.
 
-### Setting up the Arbotix-M board
+## Quick Start:
 
-In order to work with ROS it is necessary to upload the firmware into the Arbotix-M board.
+mkdir -p ~/widowx_arm/src
 
-* Download Arduino ide from https://downloads.arduino.cc/arduino-1.0.6-linux64.tgz
-  * wget https://downloads.arduino.cc/arduino-1.0.6-linux64.tgz
-  
-* Extract it into a folder.
-* Download the firmware archives from https://github.com/trossenrobotics/arbotix/archive/master.zip
-  * wget https://github.com/trossenrobotics/arbotix/archive/master.zip
-* Extract it into a folder like ~/Documents/Arduino
-* Run arduino from the folder you extracted it previously
-  * cd ~/Downloads/arduino-1.0.6
-  * ./arduino
-* Once Arduino IDE is running, change the Sketchbook folder location to /Documents/Arduino/arbotixmaster or the one you extracted it previously.
-  * File->Preferences->Sketchbook Location
-  * Tools->Board->Arbotix
-  * Tools->Serial Port->/dev/ttyUSBX
-  * File->Sketchbook->Arbotix Sketches ->ros
-  * Verify + Upload
-* The Arbotix is ready to work with ROS!!
+cd ~/widowx_arm/src
 
-### Downloading the package
+git clone https://github.com/Interbotix/widowx_arm.git .
 
-clone the repo into your workspace and compile it.
-```
-git clone https://github.com/RobotnikAutomation/widowx_arm.git
-```
-### Creating the udev rule for the device
+git clone https://github.com/Interbotix/arbotix_ros.git -b turtlebot2i
 
-In the widowx_arm_controller/config folder there's the file 58-widowx.rules. You have to copy it into the /etc/udev/rules.d folder.
+cd ~/widowx_arm
 
-```
-sudo cp 58-widowx.rules /etc/udev/rules.d
-```
+catkin_make
 
-You have to set the attribute ATTRS{serial} with the current serial number of the ftdi device
+source devel/setup.bash
 
-```
-udevadm info -a -n /dev/ttyUSB0 | grep serial 
-```
-Once modified you have to reload and restart the udev daemon
+roslaunch widowx_arm_bringup arm_moveit.launch sim:=false sr300:=false
 
-```
-sudo service udev reload
-sudo service udev restart
-sudo udevadm trigger
-```
+## Object manipluation:
 
-### Running the controller
+roslaunch widowx_arm_bringup arm_moveit.launch sim:=false sr300:=true
 
-```
-roslaunch widowx_arm_controller widowx_arm_controller.launch 
-```
-
-### Commanding the controller 
-
-```
-rostopic pub /joint_1/command std_msgs/Float64 "data: 0.0" 
-rostopic pub /joint_2/command std_msgs/Float64 "data: 0.0" 
-rostopic pub /joint_3/command std_msgs/Float64 "data: 0.0" 
-rostopic pub /joint_4/command std_msgs/Float64 "data: 0.0" 
-rostopic pub /joint_5/command std_msgs/Float64 "data: 0.0" 
-rostopic pub /gripper_revolute_joint/command std_msgs/Float64 "data: 0.0" 
-rostopic pub /gripper_prismatic_joint/command std_msgs/Float64 "data: 0.0"
-```
-
-### Visualizing the state
-
-Load the description and run the state publisher
-
-```
-roslaunch widowx_arm_description load_description.launch
-```
-
-Open the RVIZ tool and add the plugins you need to visualize the arm
-
-```
-rosrun rviz rviz
-```
+roslaunch widowx_block_manipulation block_sorting_demo.launch
