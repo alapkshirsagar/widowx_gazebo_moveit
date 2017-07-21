@@ -46,7 +46,7 @@
       </collision>
  
       <!-- This inertial field needs doesn't contain reliable data!! -->
-     <inertial>
+      <inertial>
         <mass value="0.15" />
         <origin xyz="0 0 0" />
         <inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
@@ -60,6 +60,41 @@
       <gravity>true</gravity>
     </gazebo>
     
+    <!--
+    ==  Intel SR300 stand ==
+    -->
+    
+    <!-- camera_sr300 body -->
+    <joint name="camera_stand_joint" type="fixed">
+      <origin xyz="0.37 0.0 0.0" rpy="1.57 0 3.14"/>
+      <parent link="${parent}"/>
+      <child link="camera_sr300_stand" />
+    </joint>
+    <link name="camera_sr300_stand">
+      <visual>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+         <mesh filename="package://widowx_arm_description/meshes/sensors/sr300_stand.stl" />
+        </geometry>
+        <xacro:insert_block name="material_black"/>
+      </visual>
+      <collision>
+        <origin xyz="-0.02 0.185 0.0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.126 0.370 0.185"/>
+        </geometry>
+      </collision>
+ 
+      <!-- This inertial field needs doesn't contain reliable data!! -->
+      <inertial>
+        <mass value="0.15" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
+                 iyy="0.000498940" iyz="0.0"
+                 izz="0.003879257" />
+      </inertial>
+    </link>
+
     <!--
     ==  RGB joints & links ==
     -->
