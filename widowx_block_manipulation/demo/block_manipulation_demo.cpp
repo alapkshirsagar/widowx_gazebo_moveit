@@ -76,8 +76,8 @@ private:
   int blockCount;  // number of blocks found
   
 public:
-    std::string armMode;
     bool auto_sort_;
+    bool currently_sorting_;
 
   BlockManipulationAction() : nh_("~"),
     block_detection_action_("block_detection", true),
@@ -187,8 +187,8 @@ public:
     {
       ROS_INFO(" Pick and place - Failed! %s",  state.toString().c_str());
     }
-            
-    if (blockIndex < blockCount && armMode == "m")
+
+    if (currently_sorting_ == true )
     {
       organizeBlocks();
     }
@@ -201,7 +201,15 @@ public:
   //Organize the blocks by color
   void organizeBlocks() 
   {
-    ROS_WARN_STREAM( "Organizing Blocks: Block # "<< blockIndex + 1 << ", RGB: " << block_list_.poses[blockIndex].color.r << ", " << block_list_.poses[blockIndex].color.g << ", " << block_list_.poses[blockIndex].color.b );
+    if ( blockCount <= 0 )
+    {
+      ROS_WARN( "No blocks were available for organization" );
+      return;
+    }
+    
+    currently_sorting_ = true;
+
+    ROS_INFO_STREAM( "Organizing Blocks: Block # "<< blockIndex + 1 << ", RGB: " << block_list_.poses[blockIndex].color.r << ", " << block_list_.poses[blockIndex].color.g << ", " << block_list_.poses[blockIndex].color.b );
     int targetCount;
     
     geometry_msgs::Pose endPose;
@@ -233,6 +241,12 @@ public:
     {
       moveBlock(block_list_.poses[blockIndex], endPose);
       blockIndex++;
+    }
+    
+    // Stop the organization process at the last block
+    if (blockIndex >= blockCount)
+    {
+      currently_sorting_ = false;
     }
   }
     
@@ -283,22 +297,26 @@ int main(int argc, char** argv)
   {
     ros::Duration(2.0).sleep();
     manip.detectBlocks();
-    manip.armMode="d";
     ros::Duration(5.0).sleep();
     manip.organizeBlocks();
-    manip.armMode="m";
   }
 
   while (ros::ok())
   {
     //Allow user restarting, in case block detection fails or scene changes
-    std::cout << "d - Detect, m - Move" << std::endl;
+    std::cout << "d - Detect, o - Organize" << std::endl;
     
     std::string instr;
     getline (std::cin, instr );
      
-    if (instr == "d") {manip.detectBlocks(); manip.armMode="d";}
-    if (instr == "m") {manip.organizeBlocks();manip.armMode="m";}
+    if (instr == "d")
+    {
+      manip.detectBlocks();
+    }
+    if (instr == "o")
+    {
+      manip.organizeBlocks();
+    }
   }
 
   spinner.stop();
