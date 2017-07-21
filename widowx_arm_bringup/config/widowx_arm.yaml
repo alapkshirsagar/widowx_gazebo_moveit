@@ -1,7 +1,7 @@
 source: widowx_arm.yaml
 port: /dev/ttyUSB0
-read_rate: 15
-write_rate: 25
+read_rate: 50
+write_rate: 50
 
 joints: {
     joint_1: {id: 1, ticks: 4096, range: 360.0, max_speed: 100.0},
