@@ -46,6 +46,14 @@
         <joint name="joint_4" value="-1.5844" />
         <joint name="joint_5" value="0" />
     </group_state>
+    <group_state name="gripper_closed_pose" group="widowx_gripper">
+        <joint name="gripper_joint" value="0.002" />
+        <joint name="gripper_prismatic_joint_2" value="0.002" />
+    </group_state>
+    <group_state name="gripper_open_pose" group="widowx_gripper">
+        <joint name="gripper_joint" value="0.031" />
+        <joint name="gripper_prismatic_joint_2" value="0.031" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="main_eef" parent_link="wrist_2_link" group="widowx_gripper" parent_group="widowx_arm" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
