@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
    <xacro:property name="M_SCALE" value="0.001"/>
    <xacro:property name="M_PI" value="3.14159"/>
-   
+
    <xacro:include filename="$(find widowx_arm_description)/urdf/common_materials.xacro" />
 
    <!--link name="plate_top_link"/-->
@@ -11,8 +11,18 @@
       <child link="ph_base_link" />
    </joint-->
 
+   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find widowx_arm_description)/urdf/widowx.gazebo" />
+  <gazebo>
+  <plugin name="ros_control" filename="libgazebo_ros_control.so">
+    <!--robotNamespace>/</robotNamespace-->
+    <!--robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
+  </plugin>
+  </gazebo>
+
    <xacro:macro name="widowx_arm" params="parent prefix *origin">
       <!-- links -->
+      <!-- Used for fixing robot to Gazebo 'base_link' -->
       <link name="${prefix}arm_base_link">
          <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
@@ -196,6 +206,7 @@
          </inertial>
       </link-->
       <!-- joints -->
+
       <joint name="${prefix}arm_base_joint" type="fixed">
          <xacro:insert_block name="origin" />
          <parent link="${parent}" />
@@ -206,7 +217,7 @@
          <parent link="${prefix}arm_base_link" />
          <child link="${prefix}shoulder_link" />
          <axis xyz="0 0 1" />
-         <limit lower="-2.617" upper="2.617" effort="6" velocity="0.785" />
+         <limit lower="-2.617" upper="2.617" effort="60" velocity="0.785" />
       </joint>
       <joint name="${prefix}joint_2" type="revolute">
          <!--origin xyz="0.04825 0 0.14203" rpy="0 0 0" /-->
@@ -214,49 +225,49 @@
          <parent link="${prefix}shoulder_link" />
          <child link="${prefix}biceps_link" />
          <axis xyz="0 1 0" />
-         <limit lower="-1.571" upper="1.571" effort="6" velocity="1.571" />
+         <limit lower="-1.571" upper="1.571" effort="60" velocity="1.571" />
       </joint>
       <joint name="${prefix}joint_3" type="revolute">
          <origin xyz="${M_SCALE*48.25} 0 ${M_SCALE*142.03}" rpy="0 ${M_PI/2.0} 0" />
          <parent link="${prefix}biceps_link" />
          <child link="${prefix}forearm_link" />
          <axis xyz="0 1 0" />
-         <limit lower="-1.571" upper="1.571" effort="6" velocity="1.571" />
+         <limit lower="-1.571" upper="1.571" effort="60" velocity="1.571" />
       </joint>
       <joint name="${prefix}joint_4" type="revolute">
          <origin xyz="0 0 ${M_SCALE*142.03}" rpy="0 0 0" />
          <parent link="${prefix}forearm_link" />
          <child link="${prefix}wrist_1_link" />
          <axis xyz="0 1 0" />
-         <limit lower="-1.745" upper="1.745" effort="6" velocity="1.571" />
+         <limit lower="-1.745" upper="1.745" effort="60" velocity="1.571" />
       </joint>
       <joint name="${prefix}joint_5" type="revolute">
          <origin xyz="0 0 ${M_SCALE*71.5}" rpy="0 0 0" />
          <parent link="${prefix}wrist_1_link" />
          <child link="${prefix}wrist_2_link" />
          <axis xyz="0 0 1" />
-         <limit lower="-2.617" upper="2.617" effort="6" velocity="1.571" />
+         <limit lower="-2.617" upper="2.617" effort="60" velocity="1.571" />
       </joint>
       <!--joint name="${prefix}joint_6" type="fixed">
          <origin xyz = "0 0 ${M_SCALE*43}" rpy="0 0 0" />
          <parent link="${prefix}wrist_2_link" />
          <child link="${prefix}gripper_rail_link" />
          <axis xyz="0 0 1" />
-         <limit lower="-0.31" upper="0.1" effort="6" velocity="0.5" />
+         <limit lower="-0.31" upper="0.1" effort="60" velocity="0.5" />
       </joint-->
       <!--joint name="${prefix}gripper_revolute_joint" type="revolute">
          <origin xyz = "0 0 0.065" rpy="0 0 0" />
          <parent link="${prefix}wrist_2_link" />
          <child link="${prefix}gripper_aux_link" />
          <axis xyz="0 0 1" />
-         <limit lower="-2.6" upper="2.6" effort="6" velocity="0.5" />
+         <limit lower="-2.6" upper="2.6" effort="60" velocity="0.5" />
       </joint-->
       <!--joint name="${prefix}gripper_prismatic_joint_1" type="prismatic">
          <origin xyz="0 0 0" rpy="0 0 0" />
          <parent link="${prefix}gripper_rail_link" />
          <child link="${prefix}gripper_1_link" />
          <axis xyz="0 -1 0" />
-         <limit lower="0" upper="0.027" effort="6" velocity="0.5" />
+         <limit lower="0" upper="0.027" effort="60" velocity="0.5" />
       </joint>
       <joint name="${prefix}gripper_prismatic_joint_2" type="prismatic">
          <origin xyz="0 0 0" rpy="0 0 0" />
@@ -264,7 +275,7 @@
          <child link="${prefix}gripper_2_link" />
          <mimic joint="${prefix}gripper_prismatic_joint_1" />
          <axis xyz="0 1 0" />
-         <limit lower="0" upper="0.027" effort="6" velocity="0.5" />
+         <limit lower="0" upper="0.027" effort="60" velocity="0.5" />
       </joint-->
 
       <!-- gripper -->
@@ -275,7 +286,7 @@
       <origin xyz="0 0 0.110" rpy="0 0 0"/>
       <parent link="${prefix}wrist_1_link" />
       <child link="gripper_link"/>
-      <limit effort="6" velocity="1" lower="-3.14" upper="3.14"/>
+      <limit effort="60" velocity="1" lower="-3.14" upper="3.14"/>
       <axis xyz="1 0 0"/>
     </joint-->
 
@@ -283,56 +294,79 @@
 
   <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_1"/>
+    <joint name="joint_1">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
     <actuator name="motor1">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
  <transmission name="tran2">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_2"/>
+    <joint name="joint_2">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
     <actuator name="motor2">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
  <transmission name="tran3">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_3"/>
+    <joint name="joint_3">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
     <actuator name="motor3">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
  <transmission name="tran4">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_4"/>
+    <joint name="joint_4">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
     <actuator name="motor4">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
  <transmission name="tran5">
+   <joint name="joint_5">
+     <hardwareInterface>PositionJointInterface</hardwareInterface>
+   </joint>
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_6"/>
     <actuator name="motor5">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
  <transmission name="tran6">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="gripper_prismatic_joint_1"/>
+    <joint name="gripper_joint_1">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
     <actuator name="motor6">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+
+  <transmission name="tran7">
+     <type>transmission_interface/SimpleTransmission</type>
+     <joint name="gripper_joint_2">
+       <hardwareInterface>PositionJointInterface</hardwareInterface>
+     </joint>
+     <actuator name="motor7">
+       <hardwareInterface>PositionJointInterface</hardwareInterface>
+       <mechanicalReduction>1</mechanicalReduction>
+     </actuator>
+   </transmission>
 
 </robot>

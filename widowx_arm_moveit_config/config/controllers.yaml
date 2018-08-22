@@ -10,9 +10,10 @@ controller_list:
       - joint_4
       - joint_5
   - name: gripper_controller
-    action_ns: gripper_action
-    type: GripperCommand
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
     default: true
     command_joint: gripper_joint
     joints:
-      - gripper_joint
+      - gripper_joint_1
+      - gripper_joint_2

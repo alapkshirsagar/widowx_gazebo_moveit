@@ -34,7 +34,7 @@
 #include <actionlib/server/simple_action_server.h>
 #include <widowx_block_manipulation/PickAndPlaceAction.h>
 
-#include <moveit/move_group_interface/move_group_interface.h>
+#include <moveit/move_group_interface/move_group.h>
 
 #include <geometry_msgs/PoseArray.h>
 
@@ -57,8 +57,8 @@ private:
   ros::Subscriber pick_and_place_sub_;
 
   // Move groups to control arm and gripper with MoveIt!
-  moveit::planning_interface::MoveGroupInterface arm_;
-  moveit::planning_interface::MoveGroupInterface gripper_;
+  moveit::planning_interface::MoveGroup arm_;
+  moveit::planning_interface::MoveGroup gripper_;
 
   // Parameters from goal
   std::string arm_link;
@@ -328,7 +328,7 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "pick_and_place_action_server");
 
   widowx_block_manipulation::PickAndPlaceServer server("pick_and_place");
-  
+
   //TODO: Does not work with only: ros::spin();
   ros::AsyncSpinner spinner(4);
   spinner.start();
@@ -339,6 +339,6 @@ int main(int argc, char** argv)
     rate.sleep();
   }
   spinner.stop();
-  
+
   return 0;
 }
