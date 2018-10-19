@@ -220,7 +220,7 @@ private:
     int attempts = 0;
     ROS_INFO("[pick and place] Move arm to [%.2fx, %.2fy, %.2fz, %.2fyaw]",
              target.position.x, target.position.y, target.position.z, tf::getYaw(target.orientation));
-    while (attempts < 5)
+    while (attempts < 10)
     {
       geometry_msgs::PoseStamped modiff_target;
       modiff_target.header.frame_id = arm_link;
@@ -248,7 +248,7 @@ private:
       //tf::Quaternion q = tf::createQuaternionFromRPY(0.0,
       //                                               attempts*fRand(-0.05, +0.05) + rp,
       //                                               attempts*fRand(-0.05, +0.05) + ry);
-      tf::Quaternion q = tf::createQuaternionFromRPY(3.14,
+      tf::Quaternion q = tf::createQuaternionFromRPY(-3.14,
                                                      attempts*fRand(-0.05, +0.05) /* + rp*/,
                                                      -3.14+attempts*fRand(-0.05, +0.05) + ry);
       tf::quaternionTFToMsg(q, modiff_target.pose.orientation);
@@ -295,7 +295,7 @@ private:
   bool setGripper(float opening)
   {
     ROS_DEBUG("[pick and place] Set gripper opening to %f", opening);
-    if (gripper_.setJointValueTarget("gripper_joint", opening) == false)
+    if (gripper_.setJointValueTarget("gripper_joint_1", opening) == false || gripper_.setJointValueTarget("gripper_joint_2", opening) == false)
     {
       ROS_ERROR("[pick and place] Set gripper opening to %f failed", opening);
       return false;

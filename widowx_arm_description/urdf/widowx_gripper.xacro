@@ -35,6 +35,39 @@
          <geometry>
             <mesh filename="package://widowx_arm_description/meshes/gripper_hand_fixed_link.stl"/>
          </geometry>
+         <surface>
+    <!--						<bounce>
+            <restitution_coefficient>0.01</restitution_coefficient>
+            <threshold>0</threshold>
+          </bounce>-->
+    <!--						<contact>
+            <ode>
+              <max_vel>0.001</max_vel>
+            </ode>
+          </contact>-->
+          <contact>
+            <ode>
+              <soft_cfm>0.2</soft_cfm>
+              <soft_erp>0.2</soft_erp>
+              <kp>1e5</kp>
+              <kd>1.0</kd>
+            </ode>
+          </contact>
+
+          <friction>
+            <ode>
+              <mu>1e10</mu>
+              <mu2>1e10</mu2>
+              <fdir1>0.000000 0.000000 1.000000</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
       </collision>
       <inertial>
          <origin xyz="0 0 0" rpy="0 0 0" />
@@ -55,6 +88,39 @@
          <geometry>
             <mesh filename="package://widowx_arm_description/meshes/gripper_hand_fixed_link.stl"/>
          </geometry>
+         <surface>
+    <!--						<bounce>
+            <restitution_coefficient>0.01</restitution_coefficient>
+            <threshold>0</threshold>
+          </bounce>-->
+    <!--						<contact>
+            <ode>
+              <max_vel>0.001</max_vel>
+            </ode>
+          </contact>-->
+          <contact>
+            <ode>
+              <soft_cfm>0.2</soft_cfm>
+              <soft_erp>0.2</soft_erp>
+              <kp>1e5</kp>
+              <kd>1.0</kd>
+            </ode>
+          </contact>
+
+          <friction>
+            <ode>
+              <mu>1e10</mu>
+              <mu2>1e10</mu2>
+              <fdir1>0.000000 0.000000 1.000000</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
       </collision>
       <inertial>
          <origin xyz="0 0 0" rpy="0 0 0" />
