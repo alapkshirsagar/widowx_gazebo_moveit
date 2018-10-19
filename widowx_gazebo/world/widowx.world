@@ -12,5 +12,13 @@
       <uri>model://sun</uri>
     </include>
 
+    <include>
+      <uri>model://green_block</uri>
+    </include>
+
+    <include>
+      <uri>model://red_block</uri>
+    </include>
+
   </world>
 </sdf>

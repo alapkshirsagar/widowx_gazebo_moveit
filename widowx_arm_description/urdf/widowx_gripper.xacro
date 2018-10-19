@@ -16,7 +16,7 @@
       </collision>
       <inertial>
          <origin xyz="0 0 0" rpy="0 0 0" />
-         <mass value="1" />
+         <mass value="0.1" />
          <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
       </inertial>
    </link>
@@ -56,8 +56,8 @@
 
           <friction>
             <ode>
-              <mu>1e10</mu>
-              <mu2>1e10</mu2>
+              <mu>1</mu>
+              <mu2>1</mu2>
               <fdir1>0.000000 0.000000 1.000000</fdir1>
             </ode>
           </friction>
@@ -71,7 +71,7 @@
       </collision>
       <inertial>
          <origin xyz="0 0 0" rpy="0 0 0" />
-         <mass value="1" />
+         <mass value="0.1" />
          <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
       </inertial>
    </link>
@@ -109,8 +109,8 @@
 
           <friction>
             <ode>
-              <mu>1e10</mu>
-              <mu2>1e10</mu2>
+              <mu>1</mu>
+              <mu2>1</mu2>
               <fdir1>0.000000 0.000000 1.000000</fdir1>
             </ode>
           </friction>
@@ -124,7 +124,7 @@
       </collision>
       <inertial>
          <origin xyz="0 0 0" rpy="0 0 0" />
-         <mass value="1" />
+         <mass value="0.1" />
          <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
       </inertial>
    </link>
@@ -139,13 +139,13 @@
       <parent link="${prefix}gripper_rail_link" />
       <child link="${prefix}gripper_1_link" />
       <axis xyz="0 -1 0" />
-      <limit lower="0.002" upper="0.031" effort="6" velocity="0.5" />
+      <limit lower="0.002" upper="0.031" effort="1000" velocity="0.5" />
    </joint>
    <joint name="${prefix}gripper_joint_2" type="prismatic">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <parent link="${prefix}gripper_rail_link" />
       <child link="${prefix}gripper_2_link" />
       <axis xyz="0 1 0" />
-      <limit lower="0.002" upper="0.031" effort="6" velocity="0.5" />
+      <limit lower="0.002" upper="0.031" effort="1000" velocity="0.5" />
    </joint>
 </robot>

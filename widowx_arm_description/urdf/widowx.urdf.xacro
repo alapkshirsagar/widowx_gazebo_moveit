@@ -217,7 +217,7 @@
          <parent link="${prefix}arm_base_link" />
          <child link="${prefix}shoulder_link" />
          <axis xyz="0 0 1" />
-         <limit lower="-2.617" upper="2.617" effort="60" velocity="0.785" />
+         <limit lower="-2.617" upper="2.617" effort="1000" velocity="0.785" />
       </joint>
       <joint name="${prefix}joint_2" type="revolute">
          <!--origin xyz="0.04825 0 0.14203" rpy="0 0 0" /-->
@@ -225,28 +225,28 @@
          <parent link="${prefix}shoulder_link" />
          <child link="${prefix}biceps_link" />
          <axis xyz="0 1 0" />
-         <limit lower="-1.571" upper="1.571" effort="60" velocity="1.571" />
+         <limit lower="-1.571" upper="1.571" effort="1000" velocity="1.571" />
       </joint>
       <joint name="${prefix}joint_3" type="revolute">
          <origin xyz="${M_SCALE*48.25} 0 ${M_SCALE*142.03}" rpy="0 ${M_PI/2.0} 0" />
          <parent link="${prefix}biceps_link" />
          <child link="${prefix}forearm_link" />
          <axis xyz="0 1 0" />
-         <limit lower="-1.571" upper="1.571" effort="60" velocity="1.571" />
+         <limit lower="-1.571" upper="1.571" effort="1000" velocity="1.571" />
       </joint>
       <joint name="${prefix}joint_4" type="revolute">
          <origin xyz="0 0 ${M_SCALE*142.03}" rpy="0 0 0" />
          <parent link="${prefix}forearm_link" />
          <child link="${prefix}wrist_1_link" />
          <axis xyz="0 1 0" />
-         <limit lower="-1.745" upper="1.745" effort="60" velocity="1.571" />
+         <limit lower="-1.745" upper="1.745" effort="1000" velocity="1.571" />
       </joint>
       <joint name="${prefix}joint_5" type="revolute">
          <origin xyz="0 0 ${M_SCALE*71.5}" rpy="0 0 0" />
          <parent link="${prefix}wrist_1_link" />
          <child link="${prefix}wrist_2_link" />
          <axis xyz="0 0 1" />
-         <limit lower="-2.617" upper="2.617" effort="60" velocity="1.571" />
+         <limit lower="-2.617" upper="2.617" effort="1000" velocity="1.571" />
       </joint>
       <!--joint name="${prefix}joint_6" type="fixed">
          <origin xyz = "0 0 ${M_SCALE*43}" rpy="0 0 0" />
@@ -295,10 +295,10 @@
   <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_1">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor1">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -306,10 +306,10 @@
  <transmission name="tran2">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_2">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor2">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -317,10 +317,10 @@
  <transmission name="tran3">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_3">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor3">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -328,21 +328,21 @@
  <transmission name="tran4">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_4">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor4">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
  <transmission name="tran5">
    <joint name="joint_5">
-     <hardwareInterface>PositionJointInterface</hardwareInterface>
+     <hardwareInterface>EffortJointInterface</hardwareInterface>
    </joint>
     <type>transmission_interface/SimpleTransmission</type>
     <actuator name="motor5">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -350,10 +350,10 @@
  <transmission name="tran6">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="gripper_joint_1">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor6">
-      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -361,10 +361,10 @@
   <transmission name="tran7">
      <type>transmission_interface/SimpleTransmission</type>
      <joint name="gripper_joint_2">
-       <hardwareInterface>PositionJointInterface</hardwareInterface>
+       <hardwareInterface>EffortJointInterface</hardwareInterface>
      </joint>
      <actuator name="motor7">
-       <hardwareInterface>PositionJointInterface</hardwareInterface>
+       <hardwareInterface>EffortJointInterface</hardwareInterface>
        <mechanicalReduction>1</mechanicalReduction>
      </actuator>
    </transmission>
