@@ -250,12 +250,12 @@ bool IKFastKinematicsPlugin::initialize(const std::string &robot_description,
 
   ROS_DEBUG_STREAM_NAMED("ikfast","Reading joints and links from URDF");
 
-  boost::shared_ptr<urdf::Link> link = boost::const_pointer_cast<urdf::Link>(robot_model.getLink(tip_frame_));
+  std::shared_ptr<urdf::Link> link = std::const_pointer_cast<urdf::Link>(robot_model.getLink(tip_frame_));
   while(link->name != base_frame_ && joint_names_.size() <= num_joints_)
   {
     ROS_DEBUG_NAMED("ikfast","Link %s",link->name.c_str());
     link_names_.push_back(link->name);
-    boost::shared_ptr<urdf::Joint> joint = link->parent_joint;
+    std::shared_ptr<urdf::Joint> joint = link->parent_joint;
     if(joint)
     {
       if (joint->type != urdf::Joint::UNKNOWN && joint->type != urdf::Joint::FIXED)
@@ -528,7 +528,7 @@ bool IKFastKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose
                                            moveit_msgs::MoveItErrorCodes &error_code,
                                            const kinematics::KinematicsQueryOptions &options) const
 {
-  const IKCallbackFn solution_callback = 0; 
+  const IKCallbackFn solution_callback = 0;
   std::vector<double> consistency_limits;
 
   return searchPositionIK(ik_pose,
@@ -540,7 +540,7 @@ bool IKFastKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose
                           error_code,
                           options);
 }
-    
+
 bool IKFastKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose,
                                            const std::vector<double> &ik_seed_state,
                                            double timeout,
@@ -549,7 +549,7 @@ bool IKFastKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose
                                            moveit_msgs::MoveItErrorCodes &error_code,
                                            const kinematics::KinematicsQueryOptions &options) const
 {
-  const IKCallbackFn solution_callback = 0; 
+  const IKCallbackFn solution_callback = 0;
   return searchPositionIK(ik_pose,
                           ik_seed_state,
                           timeout,
@@ -762,7 +762,7 @@ bool IKFastKinematicsPlugin::getPositionIK(const geometry_msgs::Pose &ik_pose,
 
   if(!active_)
   {
-    ROS_ERROR("kinematics not active");    
+    ROS_ERROR("kinematics not active");
     return false;
   }
 
