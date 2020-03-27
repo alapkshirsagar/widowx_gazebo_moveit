@@ -1,19 +1,19 @@
 <?xml version='1.0'?>
 <sdf version="1.4">
 <model name="green_cube">
-  <pose>0.25 0 0.15 0 0 0</pose>
+  <pose>0.25 0 0.0075 0 0 0</pose>
   <static>false</static>
     <link name="cube">
       <inertial>
         <mass>0.001</mass>
         <inertia> <!-- inertias are tricky to compute -->
           <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
-          <ixx>0.000083</ixx>       <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+          <ixx>3.75e-8</ixx>       <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
           <ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
           <ixz>0.0</ixz>         <!-- for a box: ixz = 0 -->
-          <iyy>0.000083</iyy>       <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+          <iyy>3.75e-8</iyy>       <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
           <iyz>0.0</iyz>         <!-- for a box: iyz = 0 -->
-          <izz>0.000083</izz>       <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+          <izz>3.75e-8</izz>       <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
         </inertia>
       </inertial>
       <collision name="box">
