@@ -13,3 +13,5 @@ catkin_make
 source devel/setup.bash
 
 roslaunch widowx_gazebo widowx_arm_gazebo.launch
+
+## Check Wiki for detailed instructions
